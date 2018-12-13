@@ -24,4 +24,5 @@ else{
 echo "<FONT COLOR='red'>LA RESPUESTA ES INCORRECTA</FONT>";
 $_SESSION['fallos']= $_SESSION['fallos']+1;
 }
+
  ?>

@@ -1,7 +1,7 @@
 <?php 
 sleep(1);
 
-
+session_start();
 include "ParametrosBD.php";
 
 
@@ -14,16 +14,40 @@ $fila= mysqli_num_rows($res);
 
   		$aleatorio= rand(1,$fila);
 
+$array = $_SESSION['mostradas'];
+$encontrada=false;
+$cont =sizeof($array);
 
+if($cont ==$fila){
+
+// $_SESSION['fin']=true;
+header ("Location: mostrarPuntuacion.php"); 
+}else {
+while ( $cont< $fila && $encontrada==false) {
+
+  if (in_array($aleatorio,$array)) {
+  		$aleatorio= rand(1,$fila);
+
+  } else{
+  	$encontrada=true;
+  	$cont=$cont+1;
+  }
+
+}
 $sql= "SELECT * FROM preguntas WHERE clave='$aleatorio'";
 $resultado= mysqli_query($conexion,$sql);
 
 $imprimir=mysqli_fetch_array($resultado);
 
 
-session_start();
-$_SESSION['cont']=$_SESSION['cont']+1;
+$array = $_SESSION['mostradas'];
+array_push($array, $aleatorio);
+$_SESSION['mostradas']=$array;
+
+$_SESSION['cont']=$cont;
+
 $_SESSION['complejidad']=$_SESSION['complejidad']+$imprimir['complejidad'];
+}
  
 
 
@@ -82,11 +106,13 @@ function mostrarRespuesta(){
 		success:function(datos){
 
 
-		$('#infoRespuestas').fadeIn().html(datos);},
+		$('#infoRespuestas').fadeIn().html(datos);
+	},
 		error:function(){
 			$('#infoRespuestas').fadeIn().html('<p><strong>El servidor parece que no responde</p>');
 		}
 			});}
+
 		}
 			
 	function actualizarLike(){

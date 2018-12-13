@@ -58,8 +58,7 @@
 <script>
 
 function jugar(){
-	document.getElementById('siguiente').style.visibility='visible';
-	document.getElementById('finalizar').style.visibility='visible';
+	
 	<?php 
 
 	session_start();
@@ -67,12 +66,19 @@ function jugar(){
 	$_SESSION['fallos']=0;
 	$_SESSION['complejidad']=0;
 	$_SESSION['cont']=0;
+	$_SESSION['fin']=false;
 
+$mostradas = array();
+
+	$_SESSION['mostradas']=$mostradas;
 
 	 ?>
-MostrarPreguntas();
 
+	 document.getElementById('siguiente').style.visibility='visible';
+	document.getElementById('finalizar').style.visibility='visible';
+MostrarPreguntas();
 }
+
 
 function finalizar(){
 	document.getElementById('siguiente').style.visibility='hidden';
