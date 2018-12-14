@@ -4,7 +4,10 @@ sleep(1);
 session_start();
 include "ParametrosBD.php";
 
-
+$nick = $_GET['nick'];
+if($nick !="" && $nick !="undefined"){
+	$_SESSION['nick']=$nick;
+} 
   		$conexion=mysqli_connect($servidor,$usuario,$password,$basededatos);
 
 $consulta= $sql= "SELECT * FROM preguntas";

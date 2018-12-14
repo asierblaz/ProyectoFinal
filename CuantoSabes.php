@@ -105,6 +105,7 @@ $.ajax({
 		
 }
 
+
 	function MostrarPreguntas(){
 		$.ajax({
 		url: 'SeleccionarPreguntaAleatoria.php',
