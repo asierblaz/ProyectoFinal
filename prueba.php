@@ -41,13 +41,38 @@
 	 Haz click en Jugar y comenzaremos!.<br>
 	
 
-	<br> Puedes empezar a jugar con un nick y que tus resultados queden registrados. <br>
+	<br> Puedes empezar a jugar con un nick y que tus resultados queden registrados. <br><br>
 	<input type="text" id="nick" placeholder="Introduzca su Nick"> 
 	<input type="button" name="empezar" id="empezar" value="Jugar" onclick="jugar()" style="background: orange; size: 900px">
-	<input type="button" name="empezar" id="empezar" value="probar" onclick="ComprobarNick()" style="background: orange; size: 900px">
+	<br><br><hr></hr><br>
+
+    
+<select id="elegirtema">
+<?php 
+include "ParametrosBD.php";
+
+ $conexion=mysqli_connect($servidor,$usuario,$password,$basededatos);
+
+$sql= "SELECT tema FROM preguntas";
+
+$resultado= mysqli_query($conexion,$sql);
+
+while($imprimir=mysqli_fetch_array($resultado)){
+ ?>
+
+	<option><?php echo $imprimir['tema'] ?></option>
+
+
+<?php  
+}
+
+?>
+
+<input type="button" name="empezar" id="empezar" value="Jugar Por Temas" onclick="MostrarPreguntasPorTema()" style="background: orange; size: 900px">
+
+
 </div>
-
-
+</select>
 
 
     </section>
@@ -62,17 +87,20 @@
 <script>
 
 
-
 function jugar(){
-	
-	var nick= $('#nick').val();
+		var nick= $('#nick').val();
 
-	var encontrado=""
-ComprobarNick(encontrado);
-alert(encontrado);
+	$.ajax({
+		url: 'ComprobarSiNickEnUso.php?nick='+nick+'',
 
+		
+		success:function(datos){
+
+			if(datos==1){
+alert("El nick que has itroducido esta en uso, prueba con otro")
+			} else{
 <?php 
-
+ 
 	session_start();
 	$_SESSION['aciertos']=0;
 	$_SESSION['fallos']=0;
@@ -85,10 +113,20 @@ $mostradas = array();
 	$_SESSION['mostradas']=$mostradas;
 
 	 ?>
+	 	if (nick !=""){
 
+alert("Jugaras con el nick "+nick+"");
+}
 	 document.getElementById('siguiente').style.visibility='visible';
 	document.getElementById('finalizar').style.visibility='visible';
-MostrarPreguntas();}
+MostrarPreguntas();
+			}
+		},
+			});
+		
+}
+
+
 
 
 
@@ -118,31 +156,26 @@ $.ajax({
 		
 }
 
-
-function ComprobarNick(encontrado){
+function MostrarPreguntasPorTema(){
 		var nick= $('#nick').val();
+		var tema= $('#elegirmail').val();
+		$.ajax({
+		url: 'SeleccionarPreguntaTemas.php?nick='+nick+'&tema='+tema+'',
 
-	$.ajax({
-		url: 'ComprobarSiNickEnUso.php?nick='+nick+'',
+		beforeSend:function(){
+			
+			$('#preguntas').html('<div><img src="img/loading.gif" width="60"/></div>')},
 
-		
+
 		success:function(datos){
 
-			if(datos==1){
-encontrado="si";
-return encontrado;
-			} else{
-encontrado="no";
-return encontrado;
 
-			}
-		},
+		$('#preguntas').fadeIn().html(datos);},
+		error:function(){
+			$('#preguntas').fadeIn().html('<p><strong>El servidor parece que no responde</p>');
+		}
 			});
-		
-}
-
-
-
+		}
 	function MostrarPreguntas(){
 		var nick= $('#nick').val();
 		$.ajax({

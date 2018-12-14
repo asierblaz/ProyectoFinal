@@ -40,7 +40,11 @@
 	
 	 Haz click en Jugar y comenzaremos!.<br>
 	
+
+	<br> Puedes empezar a jugar con un nick y que tus resultados queden registrados. <br>
+	<input type="text" id="nick" placeholder="Introduzca su Nick"> 
 	<input type="button" name="empezar" id="empezar" value="Jugar" onclick="jugar()" style="background: orange; size: 900px">
+
 </div>
 
 
@@ -57,27 +61,49 @@
 
 <script>
 
-function jugar(){
-	
-	<?php 
 
+function jugar(){
+		var nick= $('#nick').val();
+
+	$.ajax({
+		url: 'ComprobarSiNickEnUso.php?nick='+nick+'',
+
+		
+		success:function(datos){
+
+			if(datos==1){
+alert("El nick que has itroducido esta en uso, prueba con otro")
+			} else{
+<?php 
+ 
 	session_start();
 	$_SESSION['aciertos']=0;
 	$_SESSION['fallos']=0;
 	$_SESSION['complejidad']=0;
 	$_SESSION['cont']=0;
 	$_SESSION['fin']=false;
-
+	$_SESSION['nick']="vacio";
 $mostradas = array();
 
 	$_SESSION['mostradas']=$mostradas;
 
 	 ?>
+	 	if (nick !=""){
 
+alert("Jugaras con el nick "+nick+"");
+}
 	 document.getElementById('siguiente').style.visibility='visible';
 	document.getElementById('finalizar').style.visibility='visible';
 MostrarPreguntas();
+			}
+		},
+			});
+		
 }
+
+
+
+
 
 
 function finalizar(){
@@ -106,9 +132,12 @@ $.ajax({
 }
 
 
+
+
 	function MostrarPreguntas(){
+		var nick= $('#nick').val();
 		$.ajax({
-		url: 'SeleccionarPreguntaAleatoria.php',
+		url: 'SeleccionarPreguntaAleatoria.php?nick='+nick+'',
 
 		beforeSend:function(){
 			
@@ -126,3 +155,4 @@ $.ajax({
 		}
 
 </script>
+s
