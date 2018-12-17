@@ -81,7 +81,6 @@ alert("El nick que has itroducido esta en uso, prueba con otro")
 	$_SESSION['fallos']=0;
 	$_SESSION['complejidad']=0;
 	$_SESSION['cont']=0;
-	$_SESSION['fin']=false;
 	$_SESSION['nick']="vacio";
 $mostradas = array();
 
@@ -100,7 +99,6 @@ MostrarPreguntas();
 			});
 		
 }
-
 
 
 
@@ -133,7 +131,6 @@ $.ajax({
 
 
 
-
 	function MostrarPreguntas(){
 		var nick= $('#nick').val();
 		$.ajax({
@@ -152,6 +149,7 @@ $.ajax({
 			$('#preguntas').fadeIn().html('<p><strong>El servidor parece que no responde</p>');
 		}
 			});
+
 		}
 
 </script>

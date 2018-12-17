@@ -23,7 +23,6 @@ $cont =sizeof($array);
 
 if($cont ==$fila){
 
-// $_SESSION['fin']=true;
 header ("Location: mostrarPuntuacion.php"); 
 }else {
 while ( $cont< $fila && $encontrada==false) {

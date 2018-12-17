@@ -67,6 +67,9 @@ while($imprimir=mysqli_fetch_array($resultado)){
 
 
  <?php  
+ if ($cont == 10){
+ 	break;
+ }
 }
 ?>
 
