@@ -6,7 +6,6 @@ $complex= $_SESSION['complejidad']/$_SESSION['cont'];
 $aciertos=$_SESSION['aciertos'];
 $fallos=$_SESSION['fallos'];
 $num= $_SESSION['cont'];
-
 ?>
 
 <html>

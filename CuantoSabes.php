@@ -1,3 +1,5 @@
+<?php 	session_start();
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -43,10 +45,35 @@
 	<input type="text" id="nick" placeholder="Introduzca su Nick"> 
 	<input type="button" name="empezar" id="empezar" value="Jugar" onclick="jugar()" style="background: orange; size: 900px">
 
+
+<br><br><hr></hr><br>
+
+    
+<select id="elegirtema">
+<?php 
+include "ParametrosBD.php";
+
+ $conexion=mysqli_connect($servidor,$usuario,$password,$basededatos);
+
+$sql= "SELECT DISTINCT tema FROM preguntas";
+
+$resultado= mysqli_query($conexion,$sql);
+
+while($imprimir=mysqli_fetch_array($resultado)){
+ ?>
+
+	<option><?php echo $imprimir['tema'] ?></option>
+
+
+<?php  
+}
+
+?>
+
+<input type="button" name="empezar" id="empezar" value="Jugar Por Temas" onclick="jugarPorTema()" style="background: orange; size: 900px">
+
+
 </div>
-
-
-
 
     </section>
 	<footer class='main' id='f1'>
@@ -74,7 +101,6 @@ alert("El nick que has itroducido esta en uso, prueba con otro")
 			} else{
 <?php 
  
-	session_start();
 	$_SESSION['aciertos']=0;
 	$_SESSION['fallos']=0;
 	$_SESSION['complejidad']=0;
@@ -123,5 +149,64 @@ MostrarPreguntas();
 
 		}
 
+
+function jugarPorTema(){
+	var nick= $('#nick').val();
+
+	$.ajax({
+		url: 'ComprobarSiNickEnUso.php?nick='+nick+'',
+
+		
+		success:function(datos){
+
+			if(datos==1){
+alert("El nick que has itroducido esta en uso, prueba con otro")
+			} else{
+<?php 
+ 	
+	$_SESSION['aciertos']=0;
+	$_SESSION['fallos']=0;
+	$_SESSION['complejidad']=0;
+	$_SESSION['cont']=0;
+	$_SESSION['nick']="vacio";
+$mostradas = array();
+
+	$_SESSION['mostradas']=$mostradas;
+
+	 ?>
+	 	if (nick !=""){
+
+alert("Jugaras con el nick "+nick+"");
+}
+MostrarPreguntasPorTema();
+			}
+		},
+			});
+		
+}
+
+function MostrarPreguntasPorTema(){
+		var nick= $('#nick').val();
+		var tema= $('#elegirtema').val();
+		
+		$.ajax({
+		url: 'SeleccionarPreguntaTemas.php?nick='+nick+'&tema='+tema+'',
+
+		beforeSend:function(){
+			
+			$('#preguntas').html('<div><img src="img/loading.gif" width="60"/></div>')},
+
+
+		success:function(datos){
+
+
+		$('#preguntas').fadeIn().html(datos);},
+		error:function(){
+			$('#preguntas').fadeIn().html('<p><strong>El servidor parece que no responde</p>');
+		}
+			});
+
+		}
+
+
 </script>
-s

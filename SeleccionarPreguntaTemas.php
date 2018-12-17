@@ -2,33 +2,69 @@
 sleep(1);
 
 session_start();
+
 include "ParametrosBD.php";
 
-$tema = $_GET['tema'];
-
+$tema=$_GET['tema'];
+if($tema !="" && $tema !="undefined"){
+	$_SESSION['tema']=$tema;
+}
+$temasesion= $_SESSION['tema'];
+$nick = $_GET['nick'];
+if($nick !="" && $nick !="undefined"){
+	$_SESSION['nick']=$nick;
+} 
+echo $temasesion;
   		$conexion=mysqli_connect($servidor,$usuario,$password,$basededatos);
 
-$consulta= $sql= "SELECT * FROM preguntas";
+$consulta= $sql= "SELECT * FROM preguntas WHERE tema='temasesion'";
 $res= mysqli_query($conexion,$sql);
 
 $fila= mysqli_num_rows($res);
+echo $fila;
+  			$aleatorio= rand(1,$fila);
+echo "aleatorio";
+echo $aleatorio;
 
+$array = $_SESSION['mostradas'];
+$encontrada=false;
+$cont =sizeof($array);
+
+if($cont ==3){
+
+header ("Location: mostrarPuntuacion.php"); 
+}else {
+while ( $cont< $fila && $encontrada==false) {
+
+  if (in_array($aleatorio,$array)) {
   		$aleatorio= rand(1,$fila);
 
+  } else{
+  	$encontrada=true;
+  	$cont=$cont+1;
+  }
+
+}
 
 
-$sql= "SELECT * FROM preguntas WHERE clave='$aleatorio' AND tema='$tema'";
+$sql= "SELECT * FROM preguntas WHERE clave='$aleatorio' AND tema='$temasesion'";
 $resultado= mysqli_query($conexion,$sql);
 
 $imprimir=mysqli_fetch_array($resultado);
 
+$array = $_SESSION['mostradas'];
+array_push($array, $aleatorio);
+$_SESSION['mostradas']=$array;
 
-echo $imprimir['clave'];
-echo $imprimir['enunciado'];
+$_SESSION['cont']=$cont;
+
+$_SESSION['complejidad']=$_SESSION['complejidad']+$imprimir['complejidad'];
+}
+
+
 
  
 
-echo "hola esto es una prueba"
 
 	?>
 <fieldset style="text-align: left; background: white">
@@ -37,9 +73,6 @@ echo "hola esto es una prueba"
 		Enunciado: <?php echo $imprimir['enunciado']; ?> <br>
 		Tema: <?php echo $imprimir['tema']; ?> <br>
 		Complejidad:  <?php echo $imprimir['complejidad']; ?><br><br>
- <img src="img/like.png" height="25" onclick="actualizarLike();">
- <img src="img/dislike.png" height="25" onclick="actualizarDislike();">
-	<div id=numLikes></div>
 
 		 <u>Seleccione la respuesta Correcta:</u> <br><br>
 
@@ -53,9 +86,41 @@ echo "hola esto es una prueba"
 			<center> <?php echo $imprimir['imagen']; ?></center>
 
 </fieldset>
+<input type="button" onclick="MostrarPreguntasPorTema();" id="siguiente" value="Siguiente Pregunta ->"  >
 	<input type="button" id="boton" value="Enviar" onclick="mostrarRespuesta()">
 
  <div "id=resultado"></div>
 
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+	
 
+function mostrarRespuesta(){
+
+	var respuesta = $('input:radio[name=respuesta]:checked').val();
+	var clave= <?php echo $imprimir['clave'];  ?>;
+			if(	confirm("Estas seguro de que ["+respuesta+"] es tu respuesta final?")==true){
+
+		$.ajax({
+		url: 'ComprobarRespuesta.php?respuesta='+respuesta+'&clave='+clave+'',
+
+		beforeSend:function(){
+			
+			$('#infoRespuestas').html('<div><img src="img/loading.gif" width="30"/></div>')},
+
+
+		success:function(datos){
+
+
+		$('#infoRespuestas').fadeIn().html(datos);
+	},
+		error:function(){
+			$('#infoRespuestas').fadeIn().html('<p><strong>El servidor parece que no responde</p>');
+		}
+			});}
+
+		}
+
+	
+	</script>		

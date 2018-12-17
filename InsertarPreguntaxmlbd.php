@@ -71,7 +71,7 @@ else if( ($complejidad<0)||($complejidad>5)){
 
 }else {
 	//sentencia sql
-	$sql="INSERT INTO preguntas VALUES ('clave','$email','$enunciado','$respcorrecta','$respincorrecta1','$respincorrecta2','$respincorrecta3','$complejidad','$tema','<img  width=100px src=".$dir.">')";
+	$sql="INSERT INTO preguntas VALUES ('clave','$email','$enunciado','$respcorrecta','$respincorrecta1','$respincorrecta2','$respincorrecta3','$complejidad','$tema','<img  width=100px src=".$dir.">','megusta','dislike')";
 
 	//**************************xml
 							

@@ -81,7 +81,7 @@ $_SESSION['complejidad']=$_SESSION['complejidad']+$imprimir['complejidad'];
 </fieldset>
 <input type="button" onclick="MostrarPreguntas();" id="siguiente" value="Siguiente Pregunta ->"  >
 
-	<input type="button" id="boton" value="Enviar" onclick="document.reload();">
+	<input type="button" id="boton" value="Enviar" onclick="mostrarRespuesta();">
 <input type="button" onclick="finalizar();" id="finalizar" value="Finalizar Juego"  >
 
  <div "id=resultado"></div>
