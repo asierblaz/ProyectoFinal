@@ -79,7 +79,10 @@ $_SESSION['complejidad']=$_SESSION['complejidad']+$imprimir['complejidad'];
 			<center> <?php echo $imprimir['imagen']; ?></center>
 
 </fieldset>
-	<input type="button" id="boton" value="Enviar" onclick="mostrarRespuesta()">
+<input type="button" onclick="MostrarPreguntas();" id="siguiente" value="Siguiente Pregunta ->"  >
+
+	<input type="button" id="boton" value="Enviar" onclick="document.reload();">
+<input type="button" onclick="finalizar();" id="finalizar" value="Finalizar Juego"  >
 
  <div "id=resultado"></div>
 
@@ -163,7 +166,31 @@ function mostrarRespuesta(){
 			$('#numLikes').fadeIn().html('<p><strong>El servidor parece que no responde</p>');
 		}
 			});}
+	
+
+
+	function finalizar(){
+	
+$.ajax({
+		url: 'mostrarPuntuacion.php',
+
+		beforeSend:function(){
+			
+			$('#preguntas').html('<div><img src="img/loading.gif" width="60"/></div>')},
+
+
+		success:function(datos){
+
+
+		$('#preguntas').fadeIn().html(datos);},
+		error:function(){
+			$('#preguntas').fadeIn().html('<p><strong>El servidor parece que no responde</p>');
+		}
+			});
+
+	
 		
+}
 
 			
 		

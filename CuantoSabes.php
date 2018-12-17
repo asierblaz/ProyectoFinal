@@ -32,8 +32,6 @@
 	<div>
 <h4>Demuestra cuanto sabes</h4><br>
 
-<input type="button" onclick="MostrarPreguntas();" id="siguiente" value="Siguiente Pregunta ->" style="visibility: hidden;" >
-<input type="button" onclick="finalizar();" id="finalizar" value="Finalizar Juego" style="visibility: hidden;" >
 <div id="preguntas">
 
 	Bienvenido a la prueba quiz, aqui podras demostrar tus conocimientos y elegir si una pregunta es de tu gusto... <br>
@@ -91,8 +89,6 @@ $mostradas = array();
 
 alert("Jugaras con el nick "+nick+"");
 }
-	 document.getElementById('siguiente').style.visibility='visible';
-	document.getElementById('finalizar').style.visibility='visible';
 MostrarPreguntas();
 			}
 		},
@@ -103,31 +99,6 @@ MostrarPreguntas();
 
 
 
-
-function finalizar(){
-	document.getElementById('siguiente').style.visibility='hidden';
-	document.getElementById('finalizar').style.visibility='hidden';
-
-$.ajax({
-		url: 'mostrarPuntuacion.php',
-
-		beforeSend:function(){
-			
-			$('#preguntas').html('<div><img src="img/loading.gif" width="60"/></div>')},
-
-
-		success:function(datos){
-
-
-		$('#preguntas').fadeIn().html(datos);},
-		error:function(){
-			$('#preguntas').fadeIn().html('<p><strong>El servidor parece que no responde</p>');
-		}
-			});
-
-	
-		
-}
 
 
 
