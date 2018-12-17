@@ -1,5 +1,6 @@
 <?php
-		session_start();
+		require_once "config.php";
+$loginURL = $gClient->createAuthUrl();
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +59,10 @@
 	
 	<br>
 	
-<center> <input type="submit" id="enviar" value="Entrar"></center> 
+<center> <input class="boton"   type="submit" id="enviar" value="Entrar al Sistema"><img src="img/google.png" width="160" onclick="window.location = '<?php echo $loginURL ?>';">
+</center>
+
+
 </form>   </fieldset>
 <style type="text/css">
 	#error{

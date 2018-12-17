@@ -26,19 +26,25 @@ if( $_SESSION["tipouser"]== null || $_SESSION["tipouser"]!="alumno"){
       		<span class="right"><input type="button" id="logout" name="logout" value="Logout"></span>
       	<?php 
 include "ParametrosBD.php";
-
 		$email= $_GET['mail'];
  $conexion=mysqli_connect($servidor,$usuario,$password,$basededatos);
 $sql= "SELECT imagen,nombre FROM usuarios WHERE email='$email'";
 $resultado= mysqli_query($conexion,$sql);
-
-while($imprimir=mysqli_fetch_array($resultado)){
-
+if ($_SESSION['correo']=="" || $_SESSION['correo']==null){
+$imprimir=mysqli_fetch_array($resultado);
 echo $imprimir['nombre'];
-?> &nbsp;&nbsp;
+echo "<html>&nbsp;&nbsp;</html>";
+echo $imprimir['imagen'];}
 
-<?php
-echo $imprimir['imagen'];
+else{
+
+echo $_SESSION['givenName'];
+echo "<html>&nbsp;&nbsp;</html>";
+echo $_SESSION['familyName'];
+echo "<html>&nbsp;&nbsp;</html>";
+echo "<img  width=100px src=".$_SESSION['picture'].">";
+
+
 }
 ?>
 		<h2>Quiz: el juego de las preguntas</h2>
