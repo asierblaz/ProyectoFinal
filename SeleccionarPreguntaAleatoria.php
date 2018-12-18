@@ -67,12 +67,17 @@ $_SESSION['complejidad']=$_SESSION['complejidad']+$imprimir['complejidad'];
  <img src="img/dislike.png" height="25" onclick="actualizarDislike();">
 	<div id=numLikes></div>
 
-		 <u>Seleccione la respuesta Correcta:</u> <br><br>
+<?php
+$array = array($imprimir['respcorrecta'],  $imprimir['respincorrecta1'], $imprimir['respincorrecta2'], $imprimir['respincorrecta3']);
+shuffle($array);
+?>
 
-	<input type="radio" name="respuesta" id="respcorrecta" value="<?php echo $imprimir['respcorrecta']; ?>"> <?php echo $imprimir['respcorrecta']; ?><br>
-	<input type="radio" name="respuesta" id="respincorrecta1" checked value="<?php echo $imprimir['respincorrecta1']; ?>"> <?php echo $imprimir['respincorrecta1']; ?><br>
-	<input type="radio" name="respuesta" id="respincorrecta2" value="<?php echo $imprimir['respincorrecta2']; ?>"> <?php echo $imprimir['respincorrecta2']; ?> <br>
-	<input type="radio" name="respuesta" id="respincorrecta3" value="<?php echo $imprimir['respincorrecta3']; ?>"> <?php echo $imprimir['respincorrecta3']; ?> 
+<u>Seleccione la respuesta Correcta:</u> <br><br>
+
+	<input type="radio" name="respuesta" id="respcorrecta" checked value="<?php $array[0];?>"> <?php echo $array[0];?><br>
+	<input type="radio" name="respuesta" id="respincorrecta1"  value="<?php $array[1]; ?>"> <?php echo $array[1]; ?><br>
+	<input type="radio" name="respuesta" id="respincorrecta2" value="<?php $array[2]; ?>"> <?php echo $array[2];?> <br>
+	<input type="radio" name="respuesta" id="respincorrecta3" value="<?php $array[3];?>"> <?php echo $array[3]; ?> 
 	<br><br>
 	<div id="infoRespuestas"></div>
 <br>
