@@ -23,8 +23,9 @@
       		<span class="right" style="display:none;"><a href="/logout">Logout</a></span>
 		<h2>Quiz: el juego de las preguntas</h2>
     </header>
-	<nav class='main' id='n1' role='navigation'>
+<nav class='main' id='n1' role='navigation'>
 		<span><a href='layout.html'>Inicio</a></spam>
+		<span><a href='TopQuizers.php'>Top Quizers</a></spam>
 		<span><a href='recuperarContrasena.php'>Modificar Contraseña</a></spam>
 		<span><a href='CuantoSabes.php'>¿Cuanto Sabes?. Pruebame</a></spam>
 		<span><a href='creditos.html'>Creditos</a></spam>
@@ -38,17 +39,18 @@
 
 	Bienvenido a la prueba quiz, aqui podras demostrar tus conocimientos y elegir si una pregunta es de tu gusto... <br>
 	
-	 Haz click en Jugar y comenzaremos!.<br>
+	 Puedes jugar por temas, en el cual se te mostrarán tres preguntas sobre el tema seleccionado si las hay, o jugar contestando preguntas aleatoriamente.<br>
 	
 
-	<br> Puedes empezar a jugar con un nick y que tus resultados queden registrados. <br>
+	<br> Si registras un nick tus resultados quedaran guardados, ¿Conseguiras llegar al TOP1? ¡compite por ser el mejor!<br> <br>
 	<input type="text" id="nick" placeholder="Introduzca su Nick"> 
-	<input type="button" name="empezar" id="empezar" value="Jugar" onclick="jugar()" style="background: orange; size: 900px">
 
 
 <br><br><hr></hr><br>
+	<input type="button" name="empezar" id="empezar" value="Jugar" onclick="jugar()" style="background: orange; size: 900px">
 
-    
+    <br><br><hr></hr><br>
+
 <select id="elegirtema">
 <?php 
 include "ParametrosBD.php";
@@ -70,7 +72,8 @@ while($imprimir=mysqli_fetch_array($resultado)){
 
 ?>
 
-<input type="button" name="empezar" id="empezar" value="Jugar Por Temas" onclick="jugarPorTema()" style="background: orange; size: 900px">
+<input type="button" name="empezar" id="empezar" value="Jugar Por Temas" onclick="jugarPorTema()" style="background: orange; size: 900px"> 
+
 
 
 </div>
@@ -172,6 +175,11 @@ alert("El nick que has itroducido esta en uso, prueba con otro")
 $mostradas = array();
 
 	$_SESSION['mostradas']=$mostradas;
+$claves=array();
+	$_SESSION['claves']=$claves;
+
+
+
 
 	 ?>
 	 	if (nick !=""){

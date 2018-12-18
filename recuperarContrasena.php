@@ -36,6 +36,9 @@ session_start(); ?>
     </header>
 	<nav class='main' id='n1' role='navigation'>
 		<span><a href='layout.html'>Inicio</a></spam>
+		<span><a href='TopQuizers.php'>Top Quizers</a></spam>
+		<span><a href='recuperarContrasena.php'>Modificar Contraseña</a></spam>
+		<span><a href='CuantoSabes.php'>¿Cuanto Sabes?. Pruebame</a></spam>
 		<span><a href='creditos.html'>Creditos</a></spam>
 	</nav>
 

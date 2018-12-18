@@ -21,8 +21,9 @@
       		<span class="right" style="display:none;"><a href="/logout">Logout</a></span>
 		<h2>Quiz: el juego de las preguntas</h2>
     </header>
-	<nav class='main' id='n1' role='navigation'>
+<nav class='main' id='n1' role='navigation'>
 		<span><a href='layout.html'>Inicio</a></spam>
+		<span><a href='TopQuizers.php'>Top Quizers</a></spam>
 		<span><a href='recuperarContrasena.php'>Modificar Contraseña</a></spam>
 		<span><a href='CuantoSabes.php'>¿Cuanto Sabes?. Pruebame</a></spam>
 		<span><a href='creditos.html'>Creditos</a></spam>

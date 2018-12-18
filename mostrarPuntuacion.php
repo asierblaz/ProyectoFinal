@@ -15,13 +15,14 @@ $num= $_SESSION['cont'];
 ACIERTOS: <?php echo $aciertos; ?> <br>
 FALLOS: <?php echo  $fallos?><br>
 COMPLEJIDAD MEDIA: <?php echo $complex; ?> <br>
-<?php print_r( $_SESSION['mostradas']); ?><br>
 
 <?php 
 $nick=$_SESSION['nick'];
 
 if($nick =="vacio" || $nick==null){
+	echo "<html><br></html>";
 	echo "No tienes nick, por lo tanto tus estadisticas no seran guardadas.";
+	echo "<html><br></html>";
 }  else{
 
 include "ParametrosBD.php";

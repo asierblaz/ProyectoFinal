@@ -1,5 +1,7 @@
 <?php 
+
 sleep(1);
+
 
 session_start();
 
@@ -14,30 +16,43 @@ $nick = $_GET['nick'];
 if($nick !="" && $nick !="undefined"){
 	$_SESSION['nick']=$nick;
 } 
-echo $temasesion;
   		$conexion=mysqli_connect($servidor,$usuario,$password,$basededatos);
 
-$consulta= $sql= "SELECT * FROM preguntas WHERE tema='temasesion'";
+$consulta= $sql= "SELECT * FROM preguntas WHERE tema='$temasesion'";
+
 $res= mysqli_query($conexion,$sql);
 
+while($sacarclaves=mysqli_fetch_array($res)){
+$claves = $_SESSION['claves'];
+array_push($claves, $sacarclaves['clave']);
+$_SESSION['claves']=$claves;
+
+}
+
+
 $fila= mysqli_num_rows($res);
-echo $fila;
   			$aleatorio= rand(1,$fila);
-echo "aleatorio";
-echo $aleatorio;
+
+  $clavealeatoria= $claves[$aleatorio-1];
 
 $array = $_SESSION['mostradas'];
 $encontrada=false;
 $cont =sizeof($array);
-
-if($cont ==3){
+if ($fila>3){
+	$numpregunta=3;
+} else {
+	$numpregunta= $fila;
+}
+if($cont ==$numpregunta){
 
 header ("Location: mostrarPuntuacion.php"); 
 }else {
 while ( $cont< $fila && $encontrada==false) {
 
-  if (in_array($aleatorio,$array)) {
+  if (in_array($clavealeatoria,$array)) {
   		$aleatorio= rand(1,$fila);
+  		  $clavealeatoria= $claves[$aleatorio-1];
+
 
   } else{
   	$encontrada=true;
@@ -47,13 +62,13 @@ while ( $cont< $fila && $encontrada==false) {
 }
 
 
-$sql= "SELECT * FROM preguntas WHERE clave='$aleatorio' AND tema='$temasesion'";
+$sql= "SELECT * FROM preguntas WHERE clave='$clavealeatoria' AND tema='$temasesion'";
 $resultado= mysqli_query($conexion,$sql);
 
 $imprimir=mysqli_fetch_array($resultado);
 
 $array = $_SESSION['mostradas'];
-array_push($array, $aleatorio);
+array_push($array, $clavealeatoria);
 $_SESSION['mostradas']=$array;
 
 $_SESSION['cont']=$cont;
